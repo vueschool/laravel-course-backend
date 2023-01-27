@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Links;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->resource('/links', Links::class );
+
+Route::get("/profiles/{id}", function ($id) {
+    $user = User::find($id);
+    $links = $user->links()->select('short_link')->get();
+    return response()->json([
+        "user"=> $user,
+        "links"=> $links
+    ]);
+});
