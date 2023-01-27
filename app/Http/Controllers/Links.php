@@ -7,11 +7,16 @@ use App\Http\Requests\UpdateLinkRequest;
 use App\Models\Link;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class Links extends Controller
 {
-    function index(){
-        $links = Link::where("user_id", Auth::user()->id)->paginate(5);
+    function index(Request $request){
+        $links = QueryBuilder::for (Link::class)
+            ->allowedFilters(['full_link', 'short_link'])
+            ->allowedSorts('full_link', 'short_link', 'views', "id")
+            ->where("user_id", Auth::user()->id)
+            ->paginate($request->get('perPage', 5));
         return response()->json($links);
     }
 
