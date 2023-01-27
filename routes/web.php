@@ -20,6 +20,7 @@ Route::get('/', function () {
 });
 Route::get('/{short_link}', function ($short_link) {
     $link = Link::where("short_link", $short_link)->first();
+    if(!$link) abort(404);
     $link->views++;
     $link->save();
     return Redirect::to($link->full_link, 301);
