@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLinkRequest;
+use App\Http\Requests\UpdateLinkRequest;
 use App\Models\Link;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +20,7 @@ class Links extends Controller
         return response()->json($link);
     }
 
-    function store(Request $request){
+    function store(StoreLinkRequest $request){
         $link = new Link([
             "short_link" => $request->short_link,
             "full_link" => $request->full_link,
@@ -29,7 +31,7 @@ class Links extends Controller
         return response()->json($link, 201);
     }
 
-    function update($id, Request $request){
+    function update($id, UpdateLinkRequest $request){
         $link = Link::find($id);
         $link->full_link = $request->full_link;
         $link->short_link = $request->short_link;
