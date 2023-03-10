@@ -6,7 +6,7 @@ This repository contains the source code for the backend that's used in the cour
 
 Pair this respository with the front end SPA to power a URL Shortener app.
 
-## Setup Intstructions
+## Setup Instructions
 
 To run the backend, clone this repo.
 
